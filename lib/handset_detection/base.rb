@@ -434,7 +434,6 @@ class Base
         connect_timeout: @config['timeout'], read_timeout: @config['timeout'], write_timeout: @config['timeout'])
       socket.write(out)
       reply = socket.read 1000000000 
-      socket.close
     rescue SocketError => e
       return set_error 299, e.to_s 
     ensure
