@@ -24,8 +24,8 @@ API Kit configuration files can be downloaded directly from Handset Detection.
 2. Click 'Add a Site'
 3. Configure your new site
 4. Grab the config file variables for your API Kit (from the site settings)
-5. Place the variables into the hdconfig.yml file
-6. If you use Ruby on Rails, place hdconfig.yml in your `config` folder.
+5. Place the variables into the `hdconfig.yml` file
+6. If you use Ruby on Rails, place `hdconfig.yml` in your `config` folder.
 
 
 ## Examples ##
