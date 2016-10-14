@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/HandsetDetection/ruby-apikit.svg?branch=master)](https://travis-ci.org/HandsetDetection/ruby-apikit)
-[![Latest Stable Version](https://poser.pugx.org/handsetdetection/ruby-apikit/v/stable)](https://rubygems.org/gems/handset_detection)
-[![License](https://poser.pugx.org/handsetdetection/ruby-apikit/license)](https://rubygems.org/gems/handset_detection)
+[![Gem Version](https://badge.fury.io/rb/handset_detection.svg)](https://badge.fury.io/rb/handset_detection)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Ruby API Kit v4.0, implementing v4.0 of the HandsetDetection API. #
 
