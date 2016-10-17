@@ -1,0 +1,4 @@
+*.gem
+/.bundle/
+/doc/
+hd4_ci_config.yml
