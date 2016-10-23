@@ -536,6 +536,7 @@ class Device < Base
 
     # Sanitize headers & cleanup language
     headers.each do |key, value|
+      key = key.downcase
       if key == 'accept-language' or key == 'content-language'
         key = 'language'
         tmp = value.downcase.gsub(/ /, '').split(/[,;]/)
@@ -544,9 +545,14 @@ class Device < Base
         else
           next
         end
+      elsif key != 'profile' and key != 'x-wap-profile'
+        # Handle strings that have had + substituted for a space
+        if value.count(' ') == 0 and value.count('+') > 5 and value.length > 20
+          value.gsub!('+', ' ')
+        end
       end
-      @device_headers[key.downcase] = clean_str value 
-      @extra_headers[key.downcase] = @extra.extra_clean_str value
+      @device_headers[key] = clean_str value 
+      @extra_headers[key] = @extra.extra_clean_str value
     end
 
     @device = match_device @device_headers
