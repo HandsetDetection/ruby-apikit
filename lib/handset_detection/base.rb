@@ -27,7 +27,6 @@
 require 'active_support/core_ext/object/blank'
 require 'json'
 require 'digest/md5'
-require 'socket'
 require 'tcp_timeout'
 require 'uri'
 
@@ -433,13 +432,18 @@ class Base
       socket = TCPTimeout::TCPSocket.new(host, port, 
         connect_timeout: @config['timeout'], read_timeout: @config['timeout'], write_timeout: @config['timeout'])
       socket.write(out)
-      reply = socket.read 1000000000 
+      reply = [] 
+      r = '' 
+      until r.nil? do
+        reply << r
+        r = socket.read 8192
+      end
     rescue SocketError => e
       return set_error 299, e.to_s 
     ensure
       socket.close unless socket.nil?
     end
-    hunks = reply.split("\r\n\r\n")
+    hunks = reply.join.split("\r\n\r\n")
     return set_error(299, "Error : Reply is too short.") if hunks.length < 2 
     # header = hunks[hunks.length - 2]
     # headers = header.split("\n")
