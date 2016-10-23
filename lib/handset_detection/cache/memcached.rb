@@ -41,8 +41,9 @@ class Memcached
     else
       options = { 'value_max_bytes' => 4000000 }
     end
-    options = options.map {|k, v| [k.to_sym, v]}.to_h
-    @cache = Dalli::Client.new(servers, options)
+    o = {}
+    options.each { |k, v| o[k.to_sym] = v }
+    @cache = Dalli::Client.new(servers, o)
   end
 
   # Get key

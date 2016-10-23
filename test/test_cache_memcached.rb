@@ -11,7 +11,7 @@ class CacheMemcachedTest < Minitest::Test
       'fish' => 'blue',
       'sugar' => 'sweet',
       'number' => 4
-      }
+    }
     config = YAML::load_file 'hd4_ci_config.yml'
     config['cache'] = {}
     config['cache']['prefix'] = 'test-cache'

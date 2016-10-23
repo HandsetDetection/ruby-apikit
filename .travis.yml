@@ -1,7 +1,15 @@
 language: ruby
 rvm:
-  - 2.2
+#  - 1.9
+#  - 2.0
+#  - 2.1
+#  - 2.2
+  - 2.3
+  - jruby-1.7
+#  - jruby-9.0
 services:
   - memcached
+env:
+  - "JRUBY_OPTS='--dev -J-Xmx1g'"
 before_script:
   - cat hdconfig.yml | sed -e s/your_api_username/$API_USERNAME/ -e s/your_api_secret/$API_SECRET/ -e s/your_api_siteId/$API_SITE_ID/ > hd4_ci_config.yml

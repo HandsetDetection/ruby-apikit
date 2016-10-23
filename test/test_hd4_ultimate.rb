@@ -136,8 +136,10 @@ class HD4UltimateTest < Minitest::Test
     assert_equal reply, true
     assert_equal 0, data['status']
     assert_equal 'OK', data['message']
-    data['device'] = data['device'].sort.to_h
-    devices['NokiaN95'] = devices['NokiaN95'].sort.to_h
+    data['device'] = data['device'].sort
+    data['device'] = Hash[*data['device'][0].zip(data['device'][1]).flatten]
+    devices['NokiaN95'] = devices['NokiaN95'].sort
+    devices['NokiaN95'] = Hash[*devices['NokiaN95'][0].zip(devices['NokiaN95'][1]).flatten]
 
     assert_equal JSON.generate(devices['NokiaN95']).downcase, JSON.generate(data['device']).downcase
   end

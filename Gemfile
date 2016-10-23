@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'activesupport'
+gem 'activesupport', '~>4.2'
 gem 'dalli'
 gem 'rubyzip'
 gem 'tcp_timeout'
