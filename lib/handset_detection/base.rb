@@ -35,9 +35,9 @@ DETECTIONV4_GENERIC = 1
 
 class Base
   def initialize
-    @config = {} 
+    @config = {}
     @api_base = '/apiv4/'
-    @detected_rule_key = {} 
+    @detected_rule_key = {}
     @device_ua_filter = /[ _\\#\-,.\/:"']/
     @extra_ua_filter = /[ ]/
     @apikit = 'Ruby 4.0.0'
@@ -45,42 +45,46 @@ class Base
     @logger_port = 80
     @reply = {}
     @tree = {}
-    @detection_config = { 
+    @detection_config = {
       'device-ua-order' => ['x-operamini-phone-ua', 'x-mobile-ua', 'device-stock-ua', 'user-agent', 'agent'],
       'platform-ua-order' => ['x-operamini-phone-ua', 'x-mobile-ua', 'device-stock-ua', 'user-agent', 'agent'],
       'browser-ua-order' => ['user-agent', 'agent', 'device-stock-ua'],
       'app-ua-order' => ['user-agent', 'agent', 'device-stock-ua'],
       'language-ua-order' => ['user-agent', 'agent', 'device-stock-ua'],
-      'device-bi-order' => { 
-        'android' => [ 
-          ['ro.product.brand','ro.product.model'],
-          ['ro.product.manufacturer','ro.product.model'],
-          ['ro-product-brand','ro-product-model'],
-          ['ro-product-manufacturer','ro-product-model'],
+      'device-bi-order' => {
+        'android' => [
+          ['ro.product.brand', 'ro.product.model'],
+          ['ro.product.manufacturer', 'ro.product.model'],
+          ['ro-product-brand', 'ro-product-model'],
+          ['ro-product-manufacturer', 'ro-product-model'],
         ],
-        'ios' => [ 
-          ['utsname.brand','utsname.machine']
+        'ios' => [
+          ['utsname.brand', 'utsname.machine']
         ],
-        'windows phone' => [ 
-          ['devicemanufacturer','devicename']
+        'windows phone' => [
+          ['devicemanufacturer', 'devicename']
         ]
       },
       'platform-bi-order' => {
-        'android' => [ 
-          ['ro.build.id', 'ro.build.version.release'],
-          ['ro-build-id', 'ro-build-version-release'],
+        'android' => [
+          ['hd-platform', 'ro.build.version.release'],
+          ['hd-platform', 'ro-build-version-release'],
+          ['hd-platform', 'ro.build.id'],
+          ['hd-platform', 'ro-build-id'],
         ],
-        'ios' => [ 
-          ['uidevice.systemname','uidevice.systemversion']
+        'ios' => [
+          ['uidevice.systemname', 'uidevice.systemversion'],
+          ['hd-platform', 'uidevice.systemversion']
         ],
-        'windows phone' => [ 
-          ['osname','osversion']
+        'windows phone' => [
+          ['osname', 'osversion'],
+          ['hd-platform', 'osversion']
         ]
       },
       'browser-bi-order' => [],
-      'app-bi-order' => [] 
+      'app-bi-order' => []
     }
-    @detection_languages = { 
+    @detection_languages = {
       'af' => 'Afrikaans',
       'sq' => 'Albanian',
       'ar-dz' => 'Arabic (Algeria)',
@@ -241,15 +245,15 @@ class Base
 
   # Get reply status
   #
-  # +param+ void 
-  # +return+ int error status, 0 is Ok, anything else is probably not Ok 
+  # +param+ void
+  # +return+ int error status, 0 is Ok, anything else is probably not Ok
   #
   def get_status
     @reply['status']
   end
 
   # Get reply message
-  # 
+  #
   # +param+ void
   # +return+ string A message
   #
@@ -273,7 +277,7 @@ class Base
   #
   def set_reply(reply)
     @reply = reply
-  end 
+  end
 
   # Error handling helper. Sets a message and an error code.
   #
@@ -286,8 +290,8 @@ class Base
     @reply['status'] = status
     @reply['message'] = msg
     status == 0
-  end 
-  
+  end
+
   # String cleanse for extras matching.
   #
   # +param+ string str
@@ -309,7 +313,7 @@ class Base
     str = str.gsub(/[^\x20-\x7F]/, '')
     str.strip
   end
-  
+
   # Log function - User defined functions can be supplied in the 'logger' config variable.
   #
   def log(msg)
@@ -318,7 +322,7 @@ class Base
       @config['logger'].call(msg)
     end
   end
-  
+
   # Makes requests to the various web services of Handset Detection.
   #
   # Note : suburl - the url fragment of the web service eg site/detect/${site_id}
@@ -330,19 +334,19 @@ class Base
   # +return+ bool true on success, false otherwise
   #
   def remote(suburl, data, filetype='json', auth_required=true)
-    @reply = {} 
-    @raw_reply = {} 
+    @reply = {}
+    @raw_reply = {}
     set_error 0, ''
 
     if data.blank?
-      data = [] 
+      data = []
     end
 
     url = @api_base + suburl
     attempts = @config['retries'] + 1
     trys = 0
 
-    requestdata = JSON.generate(data) 
+    requestdata = JSON.generate(data)
 
     success = false
     while (trys+=1) < attempts and success == false
@@ -418,10 +422,10 @@ class Base
         'nonce="' + snonce + '", ' +
         'uri="' + uri.path + '", ' +
         'qop=' + qop + ', ' +
-        'nc=' + nc + ', ' + 
+        'nc=' + nc + ', ' +
         'cnonce="' + cnonce + '", ' +
         'response="' + response + '", ' +
-        'opaque="' + realm + '"' + 
+        'opaque="' + realm + '"' +
         "\r\n"
     end
     out += "Content-length: " + jsondata.length.to_s + "\r\n\r\n"
@@ -429,22 +433,22 @@ class Base
 
     socket = nil
     begin
-      socket = TCPTimeout::TCPSocket.new(host, port, 
+      socket = TCPTimeout::TCPSocket.new(host, port,
         connect_timeout: @config['timeout'], read_timeout: @config['timeout'], write_timeout: @config['timeout'])
       socket.write(out)
-      reply = [] 
-      r = '' 
+      reply = []
+      r = ''
       until r.nil? do
         reply << r
         r = socket.read 8192
       end
     rescue SocketError => e
-      return set_error 299, e.to_s 
+      return set_error 299, e.to_s
     ensure
       socket.close unless socket.nil?
     end
     hunks = reply.join.split("\r\n\r\n")
-    return set_error(299, "Error : Reply is too short.") if hunks.length < 2 
+    return set_error(299, "Error : Reply is too short.") if hunks.length < 2
     # header = hunks[hunks.length - 2]
     # headers = header.split("\n")
     body = hunks[hunks.length - 1]
@@ -548,7 +552,7 @@ class Base
   # +return+ void
   #
   def send_remote_syslog(headers)
-    headers['version'] = RUBY_VERSION 
+    headers['version'] = RUBY_VERSION
     headers['apikit'] = @apikit
     sock = UDPSocket.new(Socket::AF_INET)
     message = JSON.generate headers

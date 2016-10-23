@@ -264,9 +264,14 @@ class Device < Base
   def specs_overlay(specs_field, device, specs)
     if specs.include? 'hd_specs'
       if specs_field == 'platform'
-          unless specs['hd_specs']['general_platform'].blank?
+          unless specs['hd_specs']['general_platform'].blank? or specs['hd_specs']['general_platform_version'].blank?
             device['Device']['hd_specs']['general_platform'] = specs['hd_specs']['general_platform']
             device['Device']['hd_specs']['general_platform_version'] = specs['hd_specs']['general_platform_version']
+          else
+            unless specs['hd_specs']['general_platform'].blank? or specs['hd_specs']['general_platform'] == device['Device']['hd_specs']['general_platform']
+              device['Device']['hd_specs']['general_platform'] = specs['hd_specs']['general_platform']
+              device['Device']['hd_specs']['general_platform_version'] = ''
+            end
           end
       elsif specs_field == 'browser'
           unless specs['hd_specs']['general_browser'].blank?
@@ -471,11 +476,13 @@ class Device < Base
 
     hints = [] 
     conf_bi_keys.each do |platform, set|
-      value = ''
       set.each do |tuple|
         checking = true
+        value = ''
         tuple.each do |item|
-          unless build_info.include? item
+          if item == 'hd-platform'
+            value += "|#{platform}"
+          elsif not build_info.include?(item)
             checking = false
             break
           else

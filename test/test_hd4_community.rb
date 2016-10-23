@@ -3,7 +3,7 @@ require 'minitest/hooks/test'
 require 'handset_detection'
 require 'fileutils'
 
-class HD4CommunityTest < Minitest::Test 
+class HD4CommunityTest < Minitest::Test
   include Minitest::Hooks
 
   def before_all
@@ -12,7 +12,7 @@ class HD4CommunityTest < Minitest::Test
     Dir.mkdir '/tmp/hd4-community-test' unless File.exist?('/tmp/hd4-community-test')
     @config['filesdir'] = '/tmp/hd4-community-test'
     @config['cache'] = {'prefix' => 'hd4-community-test'}
-    @config['use_local'] = true 
+    @config['use_local'] = true
     hd = HD4.new @config
     hd.set_timeout 500
     Store::get_instance.purge
@@ -24,7 +24,7 @@ class HD4CommunityTest < Minitest::Test
     FileUtils.rm_r '/tmp/hd4-community-test'
   end
 
-  def setup 
+  def setup
     @hd = HD4.new @config
   end
 
@@ -51,7 +51,7 @@ class HD4CommunityTest < Minitest::Test
   # @group community
   #
   def test_ultimate_community_device_detect_http_desktop
-    headers = { 
+    headers = {
       'User-Agent' => 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
     }
 
@@ -68,7 +68,7 @@ class HD4CommunityTest < Minitest::Test
   # @group community
   #
   def test_ultimate_community_device_detect_http_desktop_junk
-    headers = { 
+    headers = {
       'User-Agent' => 'aksjakdjkjdaiwdidjkjdkawjdijwidawjdiajwdkawdjiwjdiawjdwidjwakdjajdkad'
     }
 
@@ -84,7 +84,7 @@ class HD4CommunityTest < Minitest::Test
   # @group community
   #
   def test_ultimate_community_device_detect_http_wii
-    headers = { 
+    headers = {
       'User-Agent' => 'Opera/9.30 (Nintendo Wii; U; ; 2047-7; es-Es)'
     }
 
@@ -101,7 +101,7 @@ class HD4CommunityTest < Minitest::Test
   # @group community
   #
   def test_ultimate_community_device_detect_http
-    headers = { 
+    headers = {
       'User-Agent' => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3 like Mac OS X; en-gb) AppleWebKit/533.17.9 (KHTML, like Gecko)'
     }
 
@@ -128,7 +128,7 @@ class HD4CommunityTest < Minitest::Test
   # @group community
   #
   def test_ultimate_community_device_detect_http_other_header
-    headers = { 
+    headers = {
       'user-agent' => 'blahblahblah',
       'x-fish-header' => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3 like Mac OS X; en-gb) AppleWebKit/533.17.9 (KHTML, like Gecko)'
     }
@@ -156,7 +156,7 @@ class HD4CommunityTest < Minitest::Test
   # @group community
   #
   def test_ultimate_community_device_detect_http_hardware_info
-    headers = { 
+    headers = {
       'user-agent' => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; en-gb) AppleWebKit/533.17.9 (KHTML, like Gecko)',
       'x-local-hardwareinfo' => '320:480:100:100'
     }
@@ -181,7 +181,7 @@ class HD4CommunityTest < Minitest::Test
   # @group community
   #
   def test_ultimate_community_device_detect_http_hardware_info_b
-    headers = { 
+    headers = {
       'user-agent' => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; en-gb) AppleWebKit/533.17.9 (KHTML, like Gecko)',
       'x-local-hardwareinfo' => '320:480:100:72'
     }
@@ -206,7 +206,7 @@ class HD4CommunityTest < Minitest::Test
   # @group community
   #
   def test_ultimate_community_device_detect_http_hardware_info_c
-    headers = { 
+    headers = {
       'user-agent' => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 2_0 like Mac OS X; en-gb) AppleWebKit/533.17.9 (KHTML, like Gecko)',
       'x-local-hardwareinfo' => '320:480:200:1200',
     }
@@ -229,7 +229,7 @@ class HD4CommunityTest < Minitest::Test
   # Detection test user-agent has been encoded with plus for space.
   # @group community
   #
-  def test_device_detect_http_plus_for_space
+  def test_ultimate_community_device_detect_http_plus_for_space
     headers = {
       'user-agent' => 'Mozilla/5.0+(Linux;+Android+5.1.1;+SM-J110M+Build/LMY48B;+wv)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Version/4.0+Chrome/47.0.2526.100+Mobile+Safari/537.36',
     }
@@ -249,7 +249,7 @@ class HD4CommunityTest < Minitest::Test
   # @group community
   #
   def test_ultimate_community_device_detect_http_fb_ios
-    headers = { 
+    headers = {
       'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_1 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D201 [FBAN/FBIOS;FBAV/9.0.0.25.31;FBBV/2102024;FBDV/iPhone6,2;FBMD/iPhone;FBSN/iPhone OS;FBSV/7.1.1;FBSS/2; FBCR/vodafoneIE;FBID/phone;FBLC/en_US;FBOP/5]',
       'Accept-Language' => 'da, en-gb;q=0.8, en;q=0.7'
     }
@@ -280,7 +280,7 @@ class HD4CommunityTest < Minitest::Test
   # @group community
   #
   def test_ultimate_community_device_detect_bi_android
-    build_info = { 
+    build_info = {
       'ro.build.PDA' => 'I9500XXUFNE7',
       'ro.build.changelist' => '699287',
       'ro.build.characteristics' => 'phone',
@@ -327,7 +327,7 @@ class HD4CommunityTest < Minitest::Test
   # @group community
   #
   def test_ultimate_community_device_detect_bi_ios
-    build_info = { 
+    build_info = {
       'utsname.machine' => 'iphone4,1',
       'utsname.brand' => 'Apple'
     }
@@ -348,7 +348,7 @@ class HD4CommunityTest < Minitest::Test
   # @group community
   #
   def test_ultimate_community_device_detect_windows_phone
-    build_info = { 
+    build_info = {
       'devicemanufacturer' => 'nokia',
       'devicename' => 'RM-875'
     }
@@ -361,5 +361,5 @@ class HD4CommunityTest < Minitest::Test
     assert_equal 'Windows Phone', reply['hd_specs']['general_platform']
     assert_equal '', reply['hd_specs']['general_type']
     assert_equal 0, reply['hd_specs']['display_ppi']
-  end  
+  end
 end
