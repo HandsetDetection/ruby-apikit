@@ -24,7 +24,7 @@
 # DAMAGE.
 #++
 
-require 'active_support/core_ext/object/blank'
+require 'handset_detection/vendor/blank'
 require 'json'
 require 'digest/md5'
 require 'tcp_timeout'
