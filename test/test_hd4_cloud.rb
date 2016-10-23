@@ -166,7 +166,7 @@ class HD4CloudTest < Minitest::Test
   #    
   def test_device_detect_http_desktop_junk
     headers = { 
-      'User-Agent' => 'aksjakdjkjdaiwdidjkjdkawjdijwidawjdiajwdkawdjiwjdiawjdwidjwakdjajdkad' + Time.now.to_i.to_s 
+      'User-Agent' => 'aksjakdjkjdaiwdidjkjdkawjdijwidawjdiajwdkawdjiwjdiawjdwidjwakdjajdkad'
     }
 
     result = @hd.device_detect headers
@@ -317,6 +317,24 @@ class HD4CloudTest < Minitest::Test
     assert reply['hd_specs'].include? 'benchmark_max'
   end
 
+  # Detection test user-agent has been encoded with plus for space.
+  # @group cloud
+  #
+  def test_device_detect_http_plus_for_space
+    headers = {
+      'user-agent' => 'Mozilla/5.0+(Linux;+Android+5.1.1;+SM-J110M+Build/LMY48B;+wv)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Version/4.0+Chrome/47.0.2526.100+Mobile+Safari/537.36',
+    }
+
+    result = @hd.device_detect headers
+    reply = @hd.get_reply
+    assert result
+    assert_equal 'Samsung', reply['hd_specs']['general_vendor']
+    assert_equal 'SM-J110M', reply['hd_specs']['general_model']
+    assert_equal 'Android', reply['hd_specs']['general_platform']
+    assert_equal '5.1.1', reply['hd_specs']['general_platform_version']
+    assert_equal 'Mobile', reply['hd_specs']['general_type']
+  end
+
   # Detection test iPhone 5s running Facebook 9.0 app (hence no general_browser set).
   # @group cloud
   #
@@ -406,13 +424,33 @@ class HD4CloudTest < Minitest::Test
 
     @hd.device_detect(build_info)
     reply = @hd.get_reply
-
     
     assert_equal 'Apple', reply['hd_specs']['general_vendor']
     assert_equal 'iPhone 4S', reply['hd_specs']['general_model']
     assert_equal 'iOS', reply['hd_specs']['general_platform']
     # Note : Default shipped version in the absence of any version information
     assert_equal '5.0', reply['hd_specs']['general_platform_version']
+    assert_equal 'Mobile', reply['hd_specs']['general_type']
+  end
+
+  # Detection test iPhone 4S Native
+  # @group cloud
+  #
+  def test_device_detect_bi_ios_overlay_platform
+    build_info = {
+      'utsname.machine' => 'iphone4,1',
+      'utsname.brand' => 'Apple',
+      'uidevice.systemversion' => '5.1',
+      'uidevice.systemname' => 'iphone os',
+    }
+
+    @hd.device_detect(build_info)
+    reply = @hd.get_reply
+
+    assert_equal 'Apple', reply['hd_specs']['general_vendor']
+    assert_equal 'iPhone 4S', reply['hd_specs']['general_model']
+    assert_equal 'iOS', reply['hd_specs']['general_platform']
+    assert_equal '5.1', reply['hd_specs']['general_platform_version']
     assert_equal 'Mobile', reply['hd_specs']['general_type']
   end
   

@@ -451,7 +451,7 @@ class Device < Base
     # Platform Detection
     @platform = v4_match_bi_helper build_info, 'platform'
     unless @platform.blank?
-      @device = specs_overlay 'platform', @device, @platform
+      @device = specs_overlay 'platform', @device, @platform['Extra']
     end
 
     @reply['hd_specs'] = @device['Device']['hd_specs']

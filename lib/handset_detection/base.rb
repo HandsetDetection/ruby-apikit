@@ -71,7 +71,7 @@ class Base
           ['ro-build-id', 'ro-build-version-release'],
         ],
         'ios' => [ 
-          ['uidevice.systemName','uidevice.systemversion']
+          ['uidevice.systemname','uidevice.systemversion']
         ],
         'windows phone' => [ 
           ['osname','osversion']

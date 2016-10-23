@@ -3,7 +3,7 @@ require 'minitest/hooks/test'
 require 'handset_detection'
 require 'fileutils'
 
-class HD4UltimateTest < Minitest::Test 
+class HD4UltimateTest < Minitest::Test
   include Minitest::Hooks
 
   def before_all
@@ -12,7 +12,7 @@ class HD4UltimateTest < Minitest::Test
     Dir.mkdir '/tmp/hd4-ultimate-test' unless File.exist?('/tmp/hd4-ultimate-test')
     @config['filesdir'] = '/tmp/hd4-ultimate-test'
     @config['cache'] = {'prefix' => 'hd4-ultimate-test'}
-    @config['use_local'] = true 
+    @config['use_local'] = true
     hd = HD4.new @config
     hd.set_timeout 500
     Store::get_instance.purge
@@ -24,7 +24,7 @@ class HD4UltimateTest < Minitest::Test
     FileUtils.rm_r '/tmp/hd4-ultimate-test'
   end
 
-  def setup 
+  def setup
     @hd = HD4.new @config
   end
 
@@ -35,7 +35,7 @@ class HD4UltimateTest < Minitest::Test
   # Fetch Archive test
   #
   def test_fetch_archive
-    data = File.read File.join(@hd.get_files_dir, "ultimate.zip") 
+    data = File.read File.join(@hd.get_files_dir, "ultimate.zip")
     assert data.length > 19000000  # Filesize greater than 19Mb (currently 28Mb).
   end
 
@@ -73,8 +73,8 @@ class HD4UltimateTest < Minitest::Test
   # @group ultimate
   #
   def test_ultimate_device_view
-    devices = { 
-      'NokiaN95' => { 
+    devices = {
+      'NokiaN95' => {
         'general_vendor' => 'Nokia',
         'general_model' => 'N95',
         'general_platform' => 'Symbian',
@@ -119,7 +119,7 @@ class HD4UltimateTest < Minitest::Test
         'media_videoplayback' => ['MPEG4', 'H.263', 'H.264', '3GPP', 'RealVideo 8', 'RealVideo 9', 'RealVideo 10'],
         'media_audio' => ['MP3', 'AAC', 'AAC+', 'eAAC+', 'WMA'],
         'media_other' => ['Auto focus', 'Video stabilizer', 'Video calling', 'Carl Zeiss optics', 'LED Flash'],
-        'features' => [ 
+        'features' => [
           'Unlimited entries', 'Multiple numbers per contact', 'Picture ID', 'Ring ID', 'Calendar', 'Alarm', 'To-Do', 'Document viewer',
           'Calculator', 'Notes', 'UPnP', 'Computer sync', 'VoIP', 'Music ringtones (MP3)', 'Vibration', 'Phone profiles', 'Speakerphone',
           'Accelerometer', 'Voice dialing', 'Voice commands', 'Voice recording', 'Push-to-Talk', 'SMS', 'MMS', 'Email', 'Instant Messaging',
@@ -168,7 +168,7 @@ class HD4UltimateTest < Minitest::Test
   # @group ultimate
   #
   def test_ultimate_device_detect_http_desktop
-    headers = { 
+    headers = {
       'User-Agent' => 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
     }
 
@@ -185,8 +185,8 @@ class HD4UltimateTest < Minitest::Test
   # @group ultimate
   #
   def test_ultimate_device_detect_http_desktop_junk
-    headers = { 
-      'User-Agent' => 'aksjakdjkjdaiwdidjkjdkawjdijwidawjdiajwdkawdjiwjdiawjdwidjwakdjajdkad' + Time.now.to_i.to_s
+    headers = {
+      'User-Agent' => 'aksjakdjkjdaiwdidjkjdkawjdijwidawjdiajwdkawdjiwjdiawjdwidjwakdjajdkad'
     }
 
     result = @hd.device_detect headers
@@ -201,7 +201,7 @@ class HD4UltimateTest < Minitest::Test
   # @group ultimate
   #
   def test_ultimate_device_detect_http_wii
-    headers = { 
+    headers = {
       'User-Agent' => 'Opera/9.30 (Nintendo Wii; U; ; 2047-7; es-Es)'
     }
 
@@ -218,7 +218,7 @@ class HD4UltimateTest < Minitest::Test
   # @group ultimate
   #
   def test_ultimate_device_detect_http
-    headers = { 
+    headers = {
       'User-Agent' => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3 like Mac OS X; en-gb) AppleWebKit/533.17.9 (KHTML, like Gecko)'
     }
 
@@ -245,7 +245,7 @@ class HD4UltimateTest < Minitest::Test
   # @group ultimate
   #
   def test_ultimate_device_detect_http_other_header
-    headers = { 
+    headers = {
       'user-agent' => 'blahblahblah',
       'x-fish-header' => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3 like Mac OS X; en-gb) AppleWebKit/533.17.9 (KHTML, like Gecko)'
     }
@@ -273,7 +273,7 @@ class HD4UltimateTest < Minitest::Test
   # @group ultimate
   #
   def test_ultimate_device_detect_http_hardware_info
-    headers = { 
+    headers = {
       'user-agent' => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; en-gb) AppleWebKit/533.17.9 (KHTML, like Gecko)',
       'x-local-hardwareinfo' => '320:480:100:100'
     }
@@ -298,7 +298,7 @@ class HD4UltimateTest < Minitest::Test
   # @group ultimate
   #
   def test_ultimate_device_detect_http_hardware_info_b
-    headers = { 
+    headers = {
       'user-agent' => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; en-gb) AppleWebKit/533.17.9 (KHTML, like Gecko)',
       'x-local-hardwareinfo' => '320:480:100:72'
     }
@@ -323,7 +323,7 @@ class HD4UltimateTest < Minitest::Test
   # @group ultimate
   #
   def test_ultimate_device_detect_http_hardware_info_c
-    headers = { 
+    headers = {
       'user-agent' => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 2_0 like Mac OS X; en-gb) AppleWebKit/533.17.9 (KHTML, like Gecko)',
       'x-local-hardwareinfo' => '320:480:200:1200',
     }
@@ -343,13 +343,31 @@ class HD4UltimateTest < Minitest::Test
     assert reply['hd_specs'].include? 'benchmark_max'
   end
 
+  # Detection test user-agent has been encoded with plus for space.
+  # @group ultimate
+  #
+  def test_device_detect_http_plus_for_space
+    headers = {
+      'user-agent' => 'Mozilla/5.0+(Linux;+Android+5.1.1;+SM-J110M+Build/LMY48B;+wv)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Version/4.0+Chrome/47.0.2526.100+Mobile+Safari/537.36',
+    }
+
+    result = @hd.device_detect headers
+    reply = @hd.get_reply
+    assert result
+    assert_equal 'Samsung', reply['hd_specs']['general_vendor']
+    assert_equal 'SM-J110M', reply['hd_specs']['general_model']
+    assert_equal 'Android', reply['hd_specs']['general_platform']
+    assert_equal '5.1.1', reply['hd_specs']['general_platform_version']
+    assert_equal 'Mobile', reply['hd_specs']['general_type']
+  end
+
   # iPhone 5s running Facebook 9.0 app (hence no general_browser set).
   # @depends test_fetchArchive
   # @group ultimate
   #
   def test_ultimate_device_detect_http_fb_ios
 
-    headers = { 
+    headers = {
       'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_1 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D201 [FBAN/FBIOS;FBAV/9.0.0.25.31;FBBV/2102024;FBDV/iPhone6,2;FBMD/iPhone;FBSN/iPhone OS;FBSV/7.1.1;FBSS/2; FBCR/vodafoneIE;FBID/phone;FBLC/en_US;FBOP/5]',
       'Accept-Language' => 'da, en-gb;q=0.8, en;q=0.7'
     }
@@ -380,7 +398,7 @@ class HD4UltimateTest < Minitest::Test
   # @group ultimate
   #
   def test_ultimate_device_detect_bi_android
-    build_info = { 
+    build_info = {
       'ro.build.PDA' => 'I9500XXUFNE7',
       'ro.build.changelist' => '699287',
       'ro.build.characteristics' => 'phone',
@@ -428,9 +446,9 @@ class HD4UltimateTest < Minitest::Test
   # @group ultimate
   #
   def test_ultimate_device_detect_bi_ios
-    build_info = { 
+    build_info = {
       'utsname.machine' => 'iphone4,1',
-      'utsname.brand' => 'Apple'
+      'utsname.brand' => 'Apple',
     }
 
     @hd.device_detect(build_info)
@@ -444,12 +462,33 @@ class HD4UltimateTest < Minitest::Test
     assert_equal 'Mobile', reply['hd_specs']['general_type']
   end
 
+  # Detection test iPhone 4S Native
+  # @group ultimate
+  #
+  def test_device_detect_bi_ios_overlay_platform
+    build_info = {
+      'utsname.machine' => 'iphone4,1',
+      'utsname.brand' => 'Apple',
+      'uidevice.systemversion' => '5.1',
+      'uidevice.systemname' => 'iphone os',
+    }
+
+    @hd.device_detect(build_info)
+    reply = @hd.get_reply
+
+    assert_equal 'Apple', reply['hd_specs']['general_vendor']
+    assert_equal 'iPhone 4S', reply['hd_specs']['general_model']
+    assert_equal 'iOS', reply['hd_specs']['general_platform']
+    assert_equal '5.1', reply['hd_specs']['general_platform_version']
+    assert_equal 'Mobile', reply['hd_specs']['general_type']
+  end
+
   # Windows Phone Native Nokia Lumia 1020
   # @depends test_fetchArchive
   # @group ultimate
   #
   def test_ultimate_device_detect_windows_phone
-    build_info = { 
+    build_info = {
       'devicemanufacturer' => 'nokia',
       'devicename' => 'RM-875'
     }
