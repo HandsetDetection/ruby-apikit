@@ -3,9 +3,9 @@ rvm:
 #  - 1.9
 #  - 2.0
 #  - 2.1
-#  - 2.2
-  - 2.3
-  - jruby-1.7
+  - 2.2
+#  - 2.3
+#  - jruby-1.7
 #  - jruby-9.0
 services:
   - memcached
