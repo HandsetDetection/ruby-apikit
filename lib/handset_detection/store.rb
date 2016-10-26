@@ -113,7 +113,7 @@ class Store
     return reply unless reply.blank?
     reply = fetch(key)
     return false if reply.blank?
-    return false unless @cache.write(key, reply)
+    @cache.write(key, reply)
     return reply
   end
 
