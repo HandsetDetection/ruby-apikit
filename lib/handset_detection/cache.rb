@@ -24,7 +24,7 @@
 # DAMAGE.
 #++
 
-require 'active_support/core_ext/object/blank'
+require 'handset_detection/vendor/blank'
 require 'handset_detection/cache/filesystem'
 require 'handset_detection/cache/memcached'
 require 'handset_detection/cache/rails'

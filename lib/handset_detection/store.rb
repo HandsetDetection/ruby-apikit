@@ -34,10 +34,7 @@ class Store
   attr_reader :directory, :cache
   @@instance = nil
 
-  # Singleton Constructor
-  #
-  # +param+ string $path Location of storage ROOT dir.
-  # +param+ boolean $createDirectory - Create storage directory if it does not exist
+  # Constructor
   #
   def initialize
     @dirname = "hd40store"
@@ -116,7 +113,7 @@ class Store
     return reply unless reply.blank?
     reply = fetch(key)
     return false if reply.blank?
-    return false unless @cache.write(key, reply)
+    @cache.write(key, reply)
     return reply
   end
 

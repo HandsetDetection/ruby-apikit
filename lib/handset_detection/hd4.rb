@@ -327,7 +327,8 @@ class HD4 < Base
   #    
   def device_detect(data={})
     id = data['id'].blank? ? @config['site_id'] : data['id']
-    request_body = @detect_request.merge data
+    data.delete 'id'
+    request_body = data.blank? ? @detect.request: data
     fast_key = ''
     
     # If caching enabled then check cache

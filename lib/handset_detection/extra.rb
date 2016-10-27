@@ -136,9 +136,14 @@ class Extra < Base
   #
   def verify_platform(specs=nil)
     platform = @data
-    platform.default = ''
-    platform_name = platform['Extra']['hd_specs']['general_platform'].downcase.strip
-    platform_version = platform['Extra']['hd_specs']['general_platform_version'].downcase.strip
+    platform = {} unless platform
+    if platform.include? 'Extra' and platform['Extra'].include? 'hd_specs'
+      platform_name = platform['Extra']['hd_specs']['general_platform'].downcase.strip if platform['Extra']['hd_specs'].include? 'general_platform'
+      platform_version = platform['Extra']['hd_specs']['general_platform_version'].downcase.strip if platform['Extra']['hd_specs'].include? 'general_platform_version'
+    else
+      platform_name = nil
+      platform_version = nil
+    end
     device_platform_name = specs['general_platform'].downcase.strip
     device_platform_version_min = specs['general_platform_version'].downcase.strip
     device_platform_version_max = specs['general_platform_version_max'].downcase.strip

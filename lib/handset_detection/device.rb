@@ -264,9 +264,14 @@ class Device < Base
   def specs_overlay(specs_field, device, specs)
     if specs.include? 'hd_specs'
       if specs_field == 'platform'
-          unless specs['hd_specs']['general_platform'].blank?
+          unless specs['hd_specs']['general_platform'].blank? or specs['hd_specs']['general_platform_version'].blank?
             device['Device']['hd_specs']['general_platform'] = specs['hd_specs']['general_platform']
             device['Device']['hd_specs']['general_platform_version'] = specs['hd_specs']['general_platform_version']
+          else
+            unless specs['hd_specs']['general_platform'].blank? or specs['hd_specs']['general_platform'] == device['Device']['hd_specs']['general_platform']
+              device['Device']['hd_specs']['general_platform'] = specs['hd_specs']['general_platform']
+              device['Device']['hd_specs']['general_platform_version'] = ''
+            end
           end
       elsif specs_field == 'browser'
           unless specs['hd_specs']['general_browser'].blank?
@@ -451,7 +456,7 @@ class Device < Base
     # Platform Detection
     @platform = v4_match_bi_helper build_info, 'platform'
     unless @platform.blank?
-      @device = specs_overlay 'platform', @device, @platform
+      @device = specs_overlay 'platform', @device, @platform['Extra']
     end
 
     @reply['hd_specs'] = @device['Device']['hd_specs']
@@ -471,11 +476,13 @@ class Device < Base
 
     hints = [] 
     conf_bi_keys.each do |platform, set|
-      value = ''
       set.each do |tuple|
         checking = true
+        value = ''
         tuple.each do |item|
-          unless build_info.include? item
+          if item == 'hd-platform'
+            value += "|#{platform}"
+          elsif not build_info.include?(item)
             checking = false
             break
           else
@@ -536,6 +543,7 @@ class Device < Base
 
     # Sanitize headers & cleanup language
     headers.each do |key, value|
+      key = key.downcase
       if key == 'accept-language' or key == 'content-language'
         key = 'language'
         tmp = value.downcase.gsub(/ /, '').split(/[,;]/)
@@ -544,9 +552,14 @@ class Device < Base
         else
           next
         end
+      elsif key != 'profile' and key != 'x-wap-profile'
+        # Handle strings that have had + substituted for a space
+        if value.count(' ') == 0 and value.count('+') > 5 and value.length > 20
+          value.gsub!('+', ' ')
+        end
       end
-      @device_headers[key.downcase] = clean_str value 
-      @extra_headers[key.downcase] = @extra.extra_clean_str value
+      @device_headers[key] = clean_str value 
+      @extra_headers[key] = @extra.extra_clean_str value
     end
 
     @device = match_device @device_headers
