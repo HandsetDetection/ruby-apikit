@@ -343,7 +343,7 @@ class HD4CommunityTest < Minitest::Test
     assert_equal '', reply['hd_specs']['general_type']
   end
 
-  # Windows Phone Native Nokia Lumia 1020
+  # Windows Phone Native Nokia RM-875
   # @depends test_ultimate_community_fetchArchive
   # @group community
   #
@@ -357,7 +357,7 @@ class HD4CommunityTest < Minitest::Test
     reply = @hd.get_reply
 
     assert_equal 'Nokia', reply['hd_specs']['general_vendor']
-    assert_equal 'Lumia 1020', reply['hd_specs']['general_model']
+    assert_equal 'RM-875', reply['hd_specs']['general_model']
     assert_equal 'Windows Phone', reply['hd_specs']['general_platform']
     assert_equal '', reply['hd_specs']['general_type']
     assert_equal 0, reply['hd_specs']['display_ppi']
