@@ -27,7 +27,7 @@
 require 'handset_detection/vendor/blank'
 require 'json'
 require 'digest/md5'
-require 'tcp_timeout'
+require 'handset_detection/vendor/tcp_timeout'
 require 'uri'
 
 DETECTIONV4_STANDARD = 0

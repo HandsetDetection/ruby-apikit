@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'handset_detection'
-  s.version     = '4.1.3'
-  s.date        = '2016-11-10'
+  s.version     = '4.1.4'
+  s.date        = '2016-11-15'
   s.summary     = 'API kit for HandsetDetection.com'
   s.description = 'Use the HandsetDetection.com API from Ruby.'
   s.authors     = ['Handset Detection']
@@ -12,5 +12,4 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'dalli', '~>2.7'
   s.add_runtime_dependency 'rubyzip', '~>1.1.7'
-  s.add_runtime_dependency 'tcp_timeout', '~>0.1', '>=0.1.1'
 end
