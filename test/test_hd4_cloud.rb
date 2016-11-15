@@ -541,7 +541,7 @@ class HD4CloudTest < Minitest::Test
     assert_equal 'Mobile', reply['hd_specs']['general_type']
   end
 
-  # Detection test Windows Phone Native Nokia Lumia 1020
+  # Detection test Windows Phone Native Nokia RM-875
   # @group cloud
   #
   def test_device_detect_windows_phone
@@ -554,14 +554,14 @@ class HD4CloudTest < Minitest::Test
     reply = @hd.get_reply
 
     assert_equal 'Nokia', reply['hd_specs']['general_vendor']
-    assert_equal 'Lumia 1020', reply['hd_specs']['general_model']
+    assert_equal 'RM-875', reply['hd_specs']['general_model']
     assert_equal 'Windows Phone', reply['hd_specs']['general_platform']
     assert_equal '8.0', reply['hd_specs']['general_platform_version']
     assert_equal 'Mobile', reply['hd_specs']['general_type']
     assert_equal 332, reply['hd_specs']['display_ppi']
   end
 
-  # Detection test Windows Phone Native Nokia Lumia 1020
+  # Detection test Windows Phone Native Nokia RM-875
   # @group cloud
   #
   def test_device_detect_windows_phone_b
@@ -576,7 +576,7 @@ class HD4CloudTest < Minitest::Test
     reply = @hd.get_reply
 
     assert_equal 'Nokia', reply['hd_specs']['general_vendor']
-    assert_equal 'Lumia 1020', reply['hd_specs']['general_model']
+    assert_equal 'RM-875', reply['hd_specs']['general_model']
     assert_equal 'Windows Phone', reply['hd_specs']['general_platform']
     assert_equal '8.1', reply['hd_specs']['general_platform_version']
     assert_equal 'Mobile', reply['hd_specs']['general_type']
