@@ -391,7 +391,7 @@ class HD4 < Base
     end
 
     begin
-      File.open(path, 'w') { |f| f.write(get_raw_reply) }
+      File.open(path, 'wb') { |f| f.write(get_raw_reply) }
     rescue
       return set_error 299, "Error : FetchArchive failed. Could not write #{path}"
     end
@@ -423,7 +423,7 @@ class HD4 < Base
     end
 
     begin
-      File.open(path, 'w') { |f| f.write data  }
+      File.open(path, 'wb') { |f| f.write data  }
     rescue
       return set_error 299, "Error : FetchArchive failed. Could not write #{path}"
     end
