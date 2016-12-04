@@ -366,13 +366,29 @@ class HD4 < Base
     result
   end
 
+  # Get the local file path of the Ultimate database ZIP file.
+  #
+  # +return+ string path
+  #
+  def device_get_zip_path
+    File.join(@config['filesdir'], "ultimate.zip")
+  end
+
+  # Get the local file path of the Ultimate database ZIP file.
+  #
+  # +return+ string path
+  #
+  def community_get_zip_path
+    File.join(@config['filesdir'], "communityultimate.zip")
+  end
+
   # Fetch an archive from handset detection which contains all the device specs and matching trees as individual json files.
   #
   # +param+ void
   # +return+ hd_specs data on success, false otherwise
   #
   def device_fetch_archive
-    path = File.join(@config['filesdir'], "ultimate.zip")
+    path = device_get_zip_path
     unless @config['local_archive_source'].blank?
       FileUtils.cp File.join(@config['local_archive_source'], "ultimate.zip"), path
       return install_archive path 
@@ -408,7 +424,7 @@ class HD4 < Base
   # +return+ hd_specs data on success, false otherwise
   #
   def community_fetch_archive
-    path = File.join(@config['filesdir'], "communityultimate.zip")
+    path = community_get_zip_path
     unless @config['local_archive_source'].blank?
       FileUtils.cp File.join(@config['local_archive_source'], "communityultimate.zip"), path
       return install_archive path 
