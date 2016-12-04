@@ -29,6 +29,7 @@ require 'handset_detection/cache/filesystem'
 require 'handset_detection/cache/memcached'
 require 'handset_detection/cache/rails'
 require 'handset_detection/cache/none'
+require 'handset_detection/cache/memory'
 
 # Cache class for HandsetDetection
 #
@@ -58,6 +59,8 @@ class Cache
       @cache = RailsCache.new(@config)
     elsif config.include?('cache') and config['cache'].include?('none')
       @cache = None.new(@config)
+    elsif config.include?('cache') and config['cache'].include?('memory')
+      @cache = Memory.new(@config)
     elsif defined? Rails
       @cache = RailsCache.new(@config)
     else

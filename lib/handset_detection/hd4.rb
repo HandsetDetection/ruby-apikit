@@ -333,8 +333,9 @@ class HD4 < Base
     
     # If caching enabled then check cache
     unless @config['cache_requests'].blank?
+      headers = {}
       request_body.each { |k, v| headers[k.downcase] = v }
-      headers = headers.sort.to_h
+      headers = Hash[headers.sort]
       fast_key = JSON.generate(headers).gsub(/ /, '')
       if reply = @cache.read(fast_key)
         @reply = reply
