@@ -565,7 +565,7 @@ class HD4UltimateTest < Minitest::Test
     assert_equal 'Nokia', reply['hd_specs']['general_vendor']
     assert_equal 'RM-875', reply['hd_specs']['general_model']
     assert_equal 'Windows Phone', reply['hd_specs']['general_platform']
-    assert_equal '8.1', reply['hd_specs']['general_platform_version']
+    assert_equal '8.0', reply['hd_specs']['general_platform_version']
     assert_equal 'Mobile', reply['hd_specs']['general_type']
     assert_equal 326, reply['hd_specs']['display_ppi']
   end
