@@ -383,11 +383,15 @@ class HD4 < Base
     if data.blank? 
       return set_error 299, 'Error : FetchArchive failed. Bad Download. File is zero length'
     elsif data.length < 9000000
-      trythis = JSON.parse data
-      if trythis and trythis.include?('status') and trythis.include('message')
-        return set_error trythis['status'].to_i, trythis['message']
+      begin
+        trythis = JSON.parse data
+        if trythis and trythis.include?('status') and trythis.include('message')
+          return set_error trythis['status'].to_i, trythis['message']
+        end
+      rescue Exception
+        return set_error 299, "Error : FetchArchive failed. Cannot parse the file."
       end
-      set_error 299, "Error : FetchArchive failed. Bad Download. File too short at #{data.length} bytes."
+      return set_error 299, "Error : FetchArchive failed. Bad Download. File too short at #{data.length} bytes."
     end
 
     begin
@@ -415,9 +419,13 @@ class HD4 < Base
     if data.blank?
       return set_error 299, 'Error : FetchArchive failed. Bad Download. File is zero length'
     elsif data.length < 900000
-      trythis = JSON.parse data
-      if not trythis.blank? and trythis.include?('status') and trythis.include?('message')
-        return set_error trythis['status'].to_int, trythis['message']
+      begin
+        trythis = JSON.parse data
+        if not trythis.blank? and trythis.include?('status') and trythis.include?('message')
+          return set_error trythis['status'].to_int, trythis['message']
+        end
+      rescue Exception
+        return set_error 299, "Error : FetchArchive failed. Cannot parse the file."
       end
       return set_error 299, "Error : FetchArchive failed. Bad Download. File too short at #{data.length} bytes."
     end
