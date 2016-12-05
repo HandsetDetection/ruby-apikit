@@ -333,8 +333,9 @@ class HD4 < Base
     
     # If caching enabled then check cache
     unless @config['cache_requests'].blank?
+      headers = {}
       request_body.each { |k, v| headers[k.downcase] = v }
-      headers = headers.sort.to_h
+      headers = Hash[headers.sort]
       fast_key = JSON.generate(headers).gsub(/ /, '')
       if reply = @cache.read(fast_key)
         @reply = reply
@@ -366,13 +367,29 @@ class HD4 < Base
     result
   end
 
+  # Get the local file path of the Ultimate database ZIP file.
+  #
+  # +return+ string path
+  #
+  def device_get_zip_path
+    File.join(@config['filesdir'], "ultimate.zip")
+  end
+
+  # Get the local file path of the Ultimate database ZIP file.
+  #
+  # +return+ string path
+  #
+  def community_get_zip_path
+    File.join(@config['filesdir'], "communityultimate.zip")
+  end
+
   # Fetch an archive from handset detection which contains all the device specs and matching trees as individual json files.
   #
   # +param+ void
   # +return+ hd_specs data on success, false otherwise
   #
   def device_fetch_archive
-    path = File.join(@config['filesdir'], "ultimate.zip")
+    path = device_get_zip_path
     unless @config['local_archive_source'].blank?
       FileUtils.cp File.join(@config['local_archive_source'], "ultimate.zip"), path
       return install_archive path 
@@ -383,11 +400,15 @@ class HD4 < Base
     if data.blank? 
       return set_error 299, 'Error : FetchArchive failed. Bad Download. File is zero length'
     elsif data.length < 9000000
-      trythis = JSON.parse data
-      if trythis and trythis.include?('status') and trythis.include('message')
-        return set_error trythis['status'].to_i, trythis['message']
+      begin
+        trythis = JSON.parse data
+        if trythis and trythis.include?('status') and trythis.include('message')
+          return set_error trythis['status'].to_i, trythis['message']
+        end
+      rescue Exception
+        return set_error 299, "Error : FetchArchive failed. Cannot parse the file."
       end
-      set_error 299, "Error : FetchArchive failed. Bad Download. File too short at #{data.length} bytes."
+      return set_error 299, "Error : FetchArchive failed. Bad Download. File too short at #{data.length} bytes."
     end
 
     begin
@@ -404,7 +425,7 @@ class HD4 < Base
   # +return+ hd_specs data on success, false otherwise
   #
   def community_fetch_archive
-    path = File.join(@config['filesdir'], "communityultimate.zip")
+    path = community_get_zip_path
     unless @config['local_archive_source'].blank?
       FileUtils.cp File.join(@config['local_archive_source'], "communityultimate.zip"), path
       return install_archive path 
@@ -415,9 +436,13 @@ class HD4 < Base
     if data.blank?
       return set_error 299, 'Error : FetchArchive failed. Bad Download. File is zero length'
     elsif data.length < 900000
-      trythis = JSON.parse data
-      if not trythis.blank? and trythis.include?('status') and trythis.include?('message')
-        return set_error trythis['status'].to_int, trythis['message']
+      begin
+        trythis = JSON.parse data
+        if not trythis.blank? and trythis.include?('status') and trythis.include?('message')
+          return set_error trythis['status'].to_int, trythis['message']
+        end
+      rescue Exception
+        return set_error 299, "Error : FetchArchive failed. Cannot parse the file."
       end
       return set_error 299, "Error : FetchArchive failed. Bad Download. File too short at #{data.length} bytes."
     end

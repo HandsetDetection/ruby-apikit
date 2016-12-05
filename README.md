@@ -166,6 +166,16 @@ To use your filesystem as the cache backend, you can use this configuration:
 
 	cache: { file: { directory: /tmp }}
 
+### Using in-memory cache
+
+The in-memory cache is useful when running batch jobs.
+
+	cache: { memory: {}}
+
+If running on multiple threads, you can use the `thread_safe` option:
+
+	cache: { memory: { thread_safe: true }}
+
 ## Extra Examples ##
 
 Additional examples can be found in the examples.rb file.
