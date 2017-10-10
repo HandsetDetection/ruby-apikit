@@ -138,15 +138,15 @@ class Extra < Base
     platform = @data
     platform = {} unless platform
     if platform.include? 'Extra' and platform['Extra'].include? 'hd_specs'
-      platform_name = platform['Extra']['hd_specs']['general_platform'].downcase.strip if platform['Extra']['hd_specs'].include? 'general_platform'
-      platform_version = platform['Extra']['hd_specs']['general_platform_version'].downcase.strip if platform['Extra']['hd_specs'].include? 'general_platform_version'
+      platform_name    = platform['Extra']['hd_specs']['general_platform']        .to_s.downcase.strip if platform['Extra']['hd_specs'].include? 'general_platform'
+      platform_version = platform['Extra']['hd_specs']['general_platform_version'].to_s.downcase.strip if platform['Extra']['hd_specs'].include? 'general_platform_version'
     else
       platform_name = nil
       platform_version = nil
     end
-    device_platform_name = specs['general_platform'].downcase.strip
-    device_platform_version_min = specs['general_platform_version'].downcase.strip
-    device_platform_version_max = specs['general_platform_version_max'].downcase.strip
+    device_platform_name        = specs['general_platform']            .to_s.downcase.strip
+    device_platform_version_min = specs['general_platform_version']    .to_s.downcase.strip
+    device_platform_version_max = specs['general_platform_version_max'].to_s.downcase.strip
 
     # Its possible that we didnt pickup the platform correctly or the device has no platform info
     # Return true in this case because we cant give a concrete false (it might run this version).

@@ -266,8 +266,8 @@ class HD4CommunityTest < Minitest::Test
     assert_equal '', reply['hd_specs']['general_type']
     assert_equal 'Facebook', reply['hd_specs']['general_app']
     assert_equal '9.0', reply['hd_specs']['general_app_version']
-    assert_equal '', reply['hd_specs']['general_browser']
-    assert_equal '', reply['hd_specs']['general_browser_version']
+    assert_equal 'Safari Webview', reply['hd_specs']['general_browser']
+    assert_equal '537.51', reply['hd_specs']['general_browser_version']
 
     assert reply['hd_specs'].include? 'display_pixel_ratio'
     assert reply['hd_specs'].include? 'display_ppi'
