@@ -11,5 +11,5 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
 
   s.add_runtime_dependency 'dalli', '~>2.7'
-  s.add_runtime_dependency 'rubyzip', '~>1.2.2'
+  s.add_runtime_dependency 'rubyzip', '~>1.2'
 end
