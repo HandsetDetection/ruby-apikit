@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'handset_detection'
-  s.version     = '4.2.1'
+  s.version     = '4.2.2'
   s.date        = '2017-10-09'
   s.summary     = 'API kit for HandsetDetection.com'
   s.description = 'Use the HandsetDetection.com API from Ruby.'
@@ -11,5 +11,5 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
 
   s.add_runtime_dependency 'dalli', '~>2.7'
-  s.add_runtime_dependency 'rubyzip', '~>1.1.7'
+  s.add_runtime_dependency 'rubyzip', '~>1.2.2'
 end
