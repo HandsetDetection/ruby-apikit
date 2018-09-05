@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'handset_detection'
-  s.version     = '4.2.2'
-  s.date        = '2017-10-09'
+  s.version     = '4.2.3'
+  s.date        = '2018-09-05'
   s.summary     = 'API kit for HandsetDetection.com'
   s.description = 'Use the HandsetDetection.com API from Ruby.'
   s.authors     = ['Handset Detection']
